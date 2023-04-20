@@ -1,0 +1,47 @@
+	
+--------------Cute Birds(4 in 1) Mini pack---------------------------
+
+Note: This is a small version of the "Cute Birds(4 in1)" pack.If you want more Bird assets in your game, you can download the full version of the "Cute Birds(4 in 1) pack" from the Asset store.
+
+This pack is a combination of 4 different pack, which include different kinds of animated birds like Crows, Egrets, Herons, Ducks and many stylized birds..You can use this pack in your game commercially and non-commercially.All birds comes with flying animation spritesheets, Perefectly fit for any kind 2D games.
+
+Technical Details:-
+		
+		- Total Spritesheets : 8, 6 Props sprites
+		- Design type : Cartoony, 2D
+		- Birds included : Crow, Round birds, Egrets, Herones, Ducks, Stylized birds.etc
+		- Animations : 1(Flying)-Loop Animations
+		- File format : PNG
+		- Sheet Resolution and Frames count: 
+			Bird1 - 4616 x 3896 (16)
+			Bird2 - 3584 x 2832 (16)
+			Bird3 - 4456 x 3168 (16)
+			Bird4 - 3172 x 2832 (16)
+			
+Features:-
+	- 6 Basic props included
+	- 4 In one Pack 
+	- Different unique birds : Crows,Egrets, Ducks and more.
+	- Cute and funny birds
+	- Smooth loop animations (30 fps abow)
+	- Easy to adjust speed of the animation using unity editor
+	- Prefabs included
+	- Well arranged folders
+	- High quality images
+	- Mobile supported
+	- Demo scenes & Guides included
+	
+How to use:-
+	
+	Simply drag and drop any Spritesheet animation from the Prefab (Cute_Birds(4 in 1)Mini > Prefabs) folder
+	to you scene.
+
+Note: Each birds prefabs are arranged in their respective folders, Example: "Birds2" prefab folder located in Birds2 > Prefabs"
+
+..................................................................................
+
+About Me : "SR Studios Kerala", Indie Game developer & 3D-2D Genaralist Artist from Alappuzha, Kerala, India
+
+Contact : srstudioskerala@gmail.com
+
+................Thank you for downloading this package................................
