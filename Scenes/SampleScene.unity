@@ -191,8 +191,8 @@ Canvas:
   m_GameObject: {fileID: 307212158}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 0
-  m_Camera: {fileID: 0}
+  m_RenderMode: 1
+  m_Camera: {fileID: 519420031}
   m_PlaneDistance: 100
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
@@ -326,9 +326,9 @@ RectTransform:
   m_Father: {fileID: 307212162}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 900, y: 1000}
+  m_AnchorMin: {x: 1, y: 1}
+  m_AnchorMax: {x: 1, y: 1}
+  m_AnchoredPosition: {x: -60, y: -380}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &485222459
@@ -473,7 +473,6 @@ MonoBehaviour:
   ball: {fileID: 7322479139939081348, guid: a23feaf1d7a3acb449af59db52c27e97, type: 3}
   arrow: {fileID: 2586670589606261838, guid: 309a8a49bfa2ca64d9fb8ae277fd7e8b, type: 3}
   arrowCount: {fileID: 485222457}
-  score: {fileID: 785995475}
   bow_sprites:
   - {fileID: 21300000, guid: daaaed4875ce2224ca90d255a23fb995, type: 3}
   - {fileID: 21300000, guid: df823db98aecaaa4995962bd733a6529, type: 3}
@@ -511,9 +510,9 @@ RectTransform:
   m_Father: {fileID: 307212162}
   m_RootOrder: 1
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: -500, y: 1000}
+  m_AnchorMin: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 1}
+  m_AnchoredPosition: {x: 460, y: -380}
   m_SizeDelta: {x: 400, y: 200}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &785995477
@@ -719,8 +718,8 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1161165324}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 1.5, y: -3.6, z: 0}
-  m_LocalScale: {x: 0.5, y: 0.5, z: 1}
+  m_LocalPosition: {x: 1.1, y: -3.6, z: 0}
+  m_LocalScale: {x: 0.4, y: 0.4, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}

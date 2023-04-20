@@ -61,7 +61,7 @@ public class ctrl : MonoBehaviour
                 {
                     time_shot = Time.time;
                     bow_spriteRenderer.sprite = bow_sprites[0];
-                    Instantiate(arrow, new Vector2(1.5f, -3.2f), Quaternion.identity);
+                    Instantiate(arrow, new Vector2(1.1f, -3.2f), Quaternion.identity);
                     arrowCount_UI--;
                     arrowCount.GetComponent<Text>().text = "" + arrowCount_UI;
                 }
