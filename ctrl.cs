@@ -6,10 +6,16 @@ public class ctrl : MonoBehaviour
 {
     public GameObject ball, arrow;
     float timer, time_escape, time_shot;
+
+    public Sprite[] bow_sprites;
+    SpriteRenderer bow_spriteRenderer;
+
     // Start is called before the first frame update
     void Start()
     {
         timer = 1; time_escape = 0; time_shot = 0;
+        bow_spriteRenderer = GameObject.FindWithTag("bow").GetComponent<SpriteRenderer>();
+        bow_spriteRenderer.sprite = bow_sprites[0];
     }
 
     // Update is called once per frame
@@ -48,9 +54,15 @@ public class ctrl : MonoBehaviour
                 if (time_shot + 0.5f < Time.time)
                 {
                     time_shot = Time.time;
+                    bow_spriteRenderer.sprite = bow_sprites[0];
                     Instantiate(arrow, new Vector2(1.5f, -3.2f), Quaternion.identity);
                 }
             }
+        }
+        if (bow_spriteRenderer.sprite != bow_sprites[2])
+        {
+            if (time_shot + 0.5f < Time.time) bow_spriteRenderer.sprite = bow_sprites[2];
+            else if (time_shot + 0.25f < Time.time) bow_spriteRenderer.sprite = bow_sprites[1];
         }
     }
 }
