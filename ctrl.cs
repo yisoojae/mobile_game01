@@ -1,14 +1,18 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SocialPlatforms.Impl;
+using UnityEngine.UI;
 
 public class ctrl : MonoBehaviour
 {
-    public GameObject ball, arrow;
+    public GameObject ball, arrow, arrowCount;
     float timer, time_escape, time_shot;
 
     public Sprite[] bow_sprites;
     SpriteRenderer bow_spriteRenderer;
+
+    public static int arrowCount_UI, score_UI;
 
     // Start is called before the first frame update
     void Start()
@@ -16,6 +20,8 @@ public class ctrl : MonoBehaviour
         timer = 1; time_escape = 0; time_shot = 0;
         bow_spriteRenderer = GameObject.FindWithTag("bow").GetComponent<SpriteRenderer>();
         bow_spriteRenderer.sprite = bow_sprites[0];
+
+        arrowCount_UI = 30; score_UI = 0;
     }
 
     // Update is called once per frame
@@ -56,6 +62,8 @@ public class ctrl : MonoBehaviour
                     time_shot = Time.time;
                     bow_spriteRenderer.sprite = bow_sprites[0];
                     Instantiate(arrow, new Vector2(1.5f, -3.2f), Quaternion.identity);
+                    arrowCount_UI--;
+                    arrowCount.GetComponent<Text>().text = "" + arrowCount_UI;
                 }
             }
         }

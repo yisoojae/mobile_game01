@@ -1,6 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class arrow : MonoBehaviour
 {
@@ -24,6 +25,8 @@ public class arrow : MonoBehaviour
         {
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
+            ctrl.score_UI++;
+            GameObject.FindWithTag("score").GetComponent<Text>().text = "" + ctrl.score_UI + " / " + 12;
         }
     }
 }
