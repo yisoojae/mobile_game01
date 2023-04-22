@@ -8,7 +8,7 @@ public class arrow : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        
+
     }
 
     // Update is called once per frame
@@ -24,16 +24,25 @@ public class arrow : MonoBehaviour
         {
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
-            if (collision.GetComponent<ball>().bird_num == 9) ctrl.score_UI += 4;
-            else if (collision.GetComponent<ball>().bird_num > 6) ctrl.score_UI += 3;
-            else if (collision.GetComponent<ball>().bird_num > 4) ctrl.score_UI += 2;
+            if (collision.GetComponent<ball>().bird_value == 9) ctrl.score_UI += 4;
+            else if (collision.GetComponent<ball>().bird_value > 6) ctrl.score_UI += 3;
+            else if (collision.GetComponent<ball>().bird_value > 4) ctrl.score_UI += 2;
             else ctrl.score_UI++;
             if (ctrl.score_UI >= define.maxScore[ctrl.stageLevel - 1])
             {
+                for (int i = 0; i < ctrl.ball.Length; i++)
+                {
+                    if (ctrl.ball[i] != null)
+                    {
+                        Destroy(ctrl.ball[i]);
+                        ctrl.ball[i] = null;
+                    }
+                }
                 ctrl.stageLevel++;
                 ctrl.score_UI = 0;
                 ctrl.arrowCount_UI = define.maxArrow[ctrl.stageLevel - 1];
                 GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().arrowCountRefresh();
+                GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().timer = 0;
             }
             GameObject.FindWithTag("score").GetComponent<Text>().text = "" + ctrl.score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
         }

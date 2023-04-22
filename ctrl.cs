@@ -7,7 +7,8 @@ using UnityEngine.UI;
 public class ctrl : MonoBehaviour
 {
     public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount;
-    float timer, time_escape, time_shot;
+    public static GameObject[] ball = new GameObject[3];
+    public float timer, time_escape, time_shot;
 
     public Sprite[] bow_sprites;
     SpriteRenderer bow_spriteRenderer;
@@ -15,7 +16,7 @@ public class ctrl : MonoBehaviour
     public static int arrowCount_UI, score_UI, stageLevel;
     
     //tmp
-    int bird_num, bird_random; GameObject a;
+    int bird_value, bird_random;
 
     // Start is called before the first frame update
     void Start()
@@ -52,49 +53,55 @@ public class ctrl : MonoBehaviour
 
         if (timer > define.bird_setTime)
         {
-            if (stageLevel == 1) bird_num = 1;
-            else if (stageLevel == 2)
+            for (int i = 0; i < ball.Length; i++)
             {
-                bird_random = Random.Range(0, 4);
-                bird_num = bird_random + 1;
+                if (ball[i] != null) continue;
+                if (stageLevel == 1) bird_value = 1;
+                else if (stageLevel == 2)
+                {
+                    bird_random = Random.Range(0, 4);
+                    bird_value = bird_random + 1;
+                }
+                else if (stageLevel == 3)
+                {
+                    bird_random = Random.Range(0, 8);
+                    if (bird_random > 5) bird_value = 6;
+                    else if (bird_random > 3) bird_value = 5;
+                    else bird_value = bird_random + 1;
+                }
+                else if (stageLevel == 4)
+                {
+                    bird_random = Random.Range(0, 12);
+                    if (bird_random > 9) bird_value = 8;
+                    else if (bird_random > 7) bird_value = 7;
+                    else if (bird_random > 5) bird_value = 6;
+                    else if (bird_random > 3) bird_value = 5;
+                    else bird_value = bird_random + 1;
+                }
+                else if (stageLevel == 5)
+                {
+                    bird_random = Random.Range(0, 14);
+                    if (bird_random > 11) bird_value = 9;
+                    else if (bird_random > 9) bird_value = 8;
+                    else if (bird_random > 7) bird_value = 7;
+                    else if (bird_random > 5) bird_value = 6;
+                    else if (bird_random > 3) bird_value = 5;
+                    else bird_value = bird_random + 1;
+                }
+                if (bird_value == 1) ball[i] = Instantiate(ball01, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 2) ball[i] = Instantiate(ball02, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 3) ball[i] = Instantiate(ball03, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 4) ball[i] = Instantiate(ball04, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 5) ball[i] = Instantiate(ball05, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 6) ball[i] = Instantiate(ball06, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 7) ball[i] = Instantiate(ball07, new Vector2(3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 8) ball[i] = Instantiate(ball08, new Vector2(3.5f, 2.2f), Quaternion.identity);
+                else if (bird_value == 9) ball[i] = Instantiate(ball09, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                timer = 0;
+                ball[i].GetComponent<ball>().bird_value = bird_value;
+                ball[i].GetComponent<ball>().bird_num = i;
+                break;
             }
-            else if (stageLevel == 3)
-            {
-                bird_random = Random.Range(0, 8);
-                if (bird_random > 5) bird_num = 6;
-                else if (bird_random > 3) bird_num = 5;
-                else bird_num = bird_random + 1;
-            }
-            else if (stageLevel == 4)
-            {
-                bird_random = Random.Range(0, 12);
-                if (bird_random > 9) bird_num = 8;
-                else if (bird_random > 7) bird_num = 7;
-                else if (bird_random > 5) bird_num = 6;
-                else if (bird_random > 3) bird_num = 5;
-                else bird_num = bird_random + 1;
-            }
-            else if (stageLevel == 5)
-            {
-                bird_random = Random.Range(0, 14);
-                if (bird_random > 11) bird_num = 9;
-                else if (bird_random > 9) bird_num = 8;
-                else if (bird_random > 7) bird_num = 7;
-                else if (bird_random > 5) bird_num = 6;
-                else if (bird_random > 3) bird_num = 5;
-                else bird_num = bird_random + 1;
-            }
-            if (bird_num == 1) a = Instantiate(ball01, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 2) a = Instantiate(ball02, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 3) a = Instantiate(ball03, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 4) a = Instantiate(ball04, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 5) a = Instantiate(ball05, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 6) a = Instantiate(ball06, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 7) a = Instantiate(ball07, new Vector2(3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 8) a = Instantiate(ball08, new Vector2(3.5f, 2.2f), Quaternion.identity);
-            else if (bird_num == 9) a = Instantiate(ball09, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-            timer = 0;
-            a.GetComponent<ball>().bird_num = bird_num;
         }
         
 
