@@ -6,16 +6,15 @@ using UnityEngine.UI;
 public class arrow : MonoBehaviour
 {
     // Start is called before the first frame update
-    float n;
     void Start()
     {
-        n = 12 / 40f;
+        
     }
 
     // Update is called once per frame
     void FixedUpdate()
     {
-        this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + n);
+        this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + define.bird_heightBound);
         if (this.transform.position.y > 6) Destroy(this.gameObject);
     }
 
@@ -26,7 +25,14 @@ public class arrow : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
             ctrl.score_UI++;
-            GameObject.FindWithTag("score").GetComponent<Text>().text = "" + ctrl.score_UI + " / " + 12;
+            if (ctrl.score_UI >= define.maxScore[ctrl.stageLevel - 1])
+            {
+                ctrl.stageLevel++;
+                ctrl.score_UI = 0;
+                ctrl.arrowCount_UI = define.maxArrow[ctrl.stageLevel - 1];
+                GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().arrowCountRefresh();
+            }
+            GameObject.FindWithTag("score").GetComponent<Text>().text = "" + ctrl.score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
         }
     }
 }

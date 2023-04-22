@@ -364,7 +364,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 30
+  m_Text: 0
 --- !u!222 &485222460
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -470,7 +470,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a3fc29a76d26e6140824dbea3fa1c518, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  ball: {fileID: 7322479139939081348, guid: a23feaf1d7a3acb449af59db52c27e97, type: 3}
+  ball01: {fileID: 5999396178547107704, guid: a9094ffaad80ea14da4331fb6d9a7e1e, type: 3}
+  ball02: {fileID: 7322479139939081348, guid: a23feaf1d7a3acb449af59db52c27e97, type: 3}
+  ball03: {fileID: 4063673264389929970, guid: 48fcee33ce9749245b78dfb0a369c85b, type: 3}
+  ball04: {fileID: 330072026096399867, guid: c612ff6b6633e3e4881d5675668d8d5a, type: 3}
+  ball05: {fileID: 7865592226323995479, guid: 4d062cd1824ba94428d223604521f11c, type: 3}
+  ball06: {fileID: 2787598053806573127, guid: 3338530678f6dc1469e15530c927e585, type: 3}
+  ball07: {fileID: 2446135660906146453, guid: b0564db6d1e40eb4d9bf3b2c09ac616e, type: 3}
+  ball08: {fileID: 2153134480325341255, guid: 116b87150e043b847a656bacb55fb9a0, type: 3}
+  ball09: {fileID: 3636592943492213892, guid: 3c47428bc1ae05444b4ed0acdbaff38a, type: 3}
   arrow: {fileID: 2586670589606261838, guid: 309a8a49bfa2ca64d9fb8ae277fd7e8b, type: 3}
   arrowCount: {fileID: 485222457}
   bow_sprites:
@@ -548,7 +556,7 @@ MonoBehaviour:
     m_HorizontalOverflow: 0
     m_VerticalOverflow: 0
     m_LineSpacing: 1
-  m_Text: 0 / 12
+  m_Text: 0 / 0
 --- !u!222 &785995478
 CanvasRenderer:
   m_ObjectHideFlags: 0
