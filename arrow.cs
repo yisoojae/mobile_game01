@@ -24,7 +24,10 @@ public class arrow : MonoBehaviour
         {
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
-            ctrl.score_UI++;
+            if (collision.GetComponent<ball>().bird_num == 9) ctrl.score_UI += 4;
+            else if (collision.GetComponent<ball>().bird_num > 6) ctrl.score_UI += 3;
+            else if (collision.GetComponent<ball>().bird_num > 4) ctrl.score_UI += 2;
+            else ctrl.score_UI++;
             if (ctrl.score_UI >= define.maxScore[ctrl.stageLevel - 1])
             {
                 ctrl.stageLevel++;
