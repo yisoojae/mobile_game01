@@ -1,14 +1,15 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 using UnityEngine.SocialPlatforms.Impl;
 using UnityEngine.UI;
 
 public class ctrl : MonoBehaviour
 {
-    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount;
+    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp;
     public static GameObject[] ball = new GameObject[3];
-    public float timer, time_escape, time_shot;
+    public float timer, time_escape, time_shot, timer_levelUp;
 
     public Sprite[] bow_sprites;
     SpriteRenderer bow_spriteRenderer;
@@ -18,10 +19,12 @@ public class ctrl : MonoBehaviour
     //tmp
     int bird_value, bird_random;
 
+    Color red_a;
+
     // Start is called before the first frame update
     void Start()
     {
-        timer = 1; time_escape = 0; time_shot = 0;
+        timer = 1; time_escape = 0; time_shot = 0; timer_levelUp = 0;
         bow_spriteRenderer = GameObject.FindWithTag("bow").GetComponent<SpriteRenderer>();
         bow_spriteRenderer.sprite = bow_sprites[0];
 
@@ -29,6 +32,8 @@ public class ctrl : MonoBehaviour
         
         arrowCountRefresh();
         GameObject.FindWithTag("score").GetComponent<Text>().text = "" + score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
+
+        red_a = levelUp.GetComponent<Text>().color;
     }
 
     // Update is called once per frame
@@ -126,10 +131,42 @@ public class ctrl : MonoBehaviour
             if (time_shot + define.arrow_cooldown < Time.time) bow_spriteRenderer.sprite = bow_sprites[2];
             else if (time_shot + define.arrow_cooldown / 2 < Time.time) bow_spriteRenderer.sprite = bow_sprites[1];
         }
+
+        if (arrowCount_UI == 0 && time_shot + 2 < Time.time)
+        {
+            black_UI.SetActive(true);
+            panel_UI.SetActive(true);
+            reset_UI.SetActive(true);
+        }
+
+        if (red_a.a != 0)
+        {
+            if (timer_levelUp > 0.1f)
+            {
+                if (red_a.a >= 0.1) red_a.a = levelUp.GetComponent<Text>().color.a - 0.1f;
+                else
+                {
+                    red_a.a = 0;
+                }
+                levelUp.GetComponent<Text>().color = red_a;
+                timer_levelUp = 0;
+            }
+            timer_levelUp += Time.deltaTime;
+        }
     }
 
     public void arrowCountRefresh()
     {
         arrowCount.GetComponent<Text>().text = "" + arrowCount_UI;
+    }
+    public void restart()
+    {
+        SceneManager.LoadScene(0);
+    }
+
+    public void levelUp_ani()
+    {
+        red_a.a = 1;
+        levelUp.GetComponent<Text>().color = red_a;
     }
 }

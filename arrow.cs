@@ -43,6 +43,7 @@ public class arrow : MonoBehaviour
                 ctrl.arrowCount_UI = define.maxArrow[ctrl.stageLevel - 1];
                 GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().arrowCountRefresh();
                 GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().timer = 0;
+                GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().levelUp_ani();
             }
             GameObject.FindWithTag("score").GetComponent<Text>().text = "" + ctrl.score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
         }
