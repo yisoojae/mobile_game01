@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ctrl : MonoBehaviour
 {
-    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp;
+    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, clear_UI;
     public static GameObject[] ball = new GameObject[3];
     public float timer, time_escape, time_shot, timer_levelUp;
 
@@ -132,7 +132,7 @@ public class ctrl : MonoBehaviour
             else if (time_shot + define.arrow_cooldown / 2 < Time.time) bow_spriteRenderer.sprite = bow_sprites[1];
         }
 
-        if (arrowCount_UI == 0 && time_shot + 2 < Time.time)
+        if (arrowCount_UI == 0 && time_shot + 2 < Time.time && !black_UI.activeSelf)
         {
             black_UI.SetActive(true);
             panel_UI.SetActive(true);
@@ -163,10 +163,20 @@ public class ctrl : MonoBehaviour
     {
         SceneManager.LoadScene(0);
     }
+    public void gameExit()
+    {
+        Application.Quit();
+    }
 
     public void levelUp_ani()
     {
         red_a.a = 1;
         levelUp.GetComponent<Text>().color = red_a;
+    }
+    public void gameClear()
+    {
+        black_UI.SetActive(true);
+        clearPanel_UI.SetActive(true);
+        clear_UI.SetActive(true);
     }
 }

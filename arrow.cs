@@ -30,20 +30,27 @@ public class arrow : MonoBehaviour
             else ctrl.score_UI++;
             if (ctrl.score_UI >= define.maxScore[ctrl.stageLevel - 1])
             {
-                for (int i = 0; i < ctrl.ball.Length; i++)
+                if (ctrl.stageLevel == 5)
                 {
-                    if (ctrl.ball[i] != null)
-                    {
-                        Destroy(ctrl.ball[i]);
-                        ctrl.ball[i] = null;
-                    }
+                    GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().gameClear();
                 }
-                ctrl.stageLevel++;
-                ctrl.score_UI = 0;
-                ctrl.arrowCount_UI = define.maxArrow[ctrl.stageLevel - 1];
-                GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().arrowCountRefresh();
-                GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().timer = 0;
-                GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().levelUp_ani();
+                else
+                {
+                    for (int i = 0; i < ctrl.ball.Length; i++)
+                    {
+                        if (ctrl.ball[i] != null)
+                        {
+                            Destroy(ctrl.ball[i]);
+                            ctrl.ball[i] = null;
+                        }
+                    }
+                    ctrl.stageLevel++;
+                    ctrl.score_UI = 0;
+                    ctrl.arrowCount_UI = define.maxArrow[ctrl.stageLevel - 1];
+                    GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().arrowCountRefresh();
+                    GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().timer = 0;
+                    GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().levelUp_ani();
+                }
             }
             GameObject.FindWithTag("score").GetComponent<Text>().text = "" + ctrl.score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
         }
