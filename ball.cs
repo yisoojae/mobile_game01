@@ -10,9 +10,9 @@ public class ball : MonoBehaviour
     void Start()
     {
         speed = (Random.Range(0, 9) / 4f + 2f) / 45;
-        if (bird_value == 9) speed *= 1.8f;
-        else if (bird_value > 6) speed *= -1;
-        else if (bird_value > 4) speed *= 1.35f;
+        if (bird_value == 9) speed *= 3;
+        else if (bird_value > 6) speed *= -1.1f;
+        else if (bird_value > 4) speed *= 1.7f;
         else if (bird_value > 1) speed *= 1.15f;
         height = Random.Range(0, 10);
     }

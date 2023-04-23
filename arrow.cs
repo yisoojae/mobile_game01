@@ -2,9 +2,13 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using static UnityEngine.ParticleSystem;
 
 public class arrow : MonoBehaviour
 {
+    public GameObject feather_particle;
+    public ParticleSystem featherParticle_P;
+    ParticleSystem.MainModule mainModule_F;
     // Start is called before the first frame update
     void Start()
     {
@@ -22,6 +26,47 @@ public class arrow : MonoBehaviour
     {
         if (collision.gameObject.tag == "ball")
         {
+            mainModule_F = featherParticle_P.main;
+            switch (collision.GetComponent<ball>().bird_value)
+            {
+                case 1:
+                    mainModule_F.startColor = new Color(1, 0.5f, 0);
+                    mainModule_F.startSize = 1;
+                    break;
+                case 2:
+                    mainModule_F.startColor = Color.red;
+                    mainModule_F.startSize = 0.5f;
+                    break;
+                case 3:
+                    mainModule_F.startColor = new Color(1, 1, 200 / 255f);
+                    mainModule_F.startSize = 0.5f;
+                    break;
+                case 4:
+                    mainModule_F.startColor = Color.black;
+                    mainModule_F.startSize = 0.5f;
+                    break;
+                case 5:
+                    mainModule_F.startColor = new Color(1, 192 / 255f, 0);
+                    mainModule_F.startSize = 0.5f;
+                    break;
+                case 6:
+                    mainModule_F.startColor = Color.cyan;
+                    mainModule_F.startSize = 0.5f;
+                    break;
+                case 7:
+                    mainModule_F.startColor = Color.yellow;
+                    mainModule_F.startSize = 0.5f;
+                    break;
+                case 8:
+                    mainModule_F.startColor = Color.gray;
+                    mainModule_F.startSize = 0.6f;
+                    break;
+                case 9:
+                    mainModule_F.startColor = new Color(1, 1, 0.5f);
+                    mainModule_F.startSize = 0.9f;
+                    break;
+            }
+            Instantiate(feather_particle, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
             if (collision.GetComponent<ball>().bird_value == 9) ctrl.score_UI += 4;
