@@ -22,7 +22,11 @@ public class ball : MonoBehaviour
     {
         if (height < 5) this.transform.position = new Vector2(this.transform.position.x + speed, this.transform.position.y + 0.05f);
         else this.transform.position = new Vector2(this.transform.position.x + speed, this.transform.position.y - 0.05f);
-        if (this.transform.position.x > 5) Destroy(this.gameObject);
+        if (this.transform.position.x > 5 || this.transform.position.x < -5)
+        {
+            Destroy(this.gameObject);
+            ctrl.ball[bird_num] = null;
+        }
         if (timer + 0.1f < Time.time)
         {
             if (height == 9) height = 0;

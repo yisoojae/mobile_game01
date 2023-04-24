@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 using static UnityEngine.ParticleSystem;
@@ -72,6 +73,7 @@ public class arrow : MonoBehaviour
             Instantiate(feather_particle, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
+            ctrl.ball[collision.GetComponent<ball>().bird_num] = null;
             a = Instantiate(scorePrefab, collision.transform.position, Quaternion.identity, GameObject.FindWithTag("Canvas").transform);
             if (collision.GetComponent<ball>().bird_value == 9)
             {
