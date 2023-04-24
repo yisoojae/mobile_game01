@@ -7,7 +7,7 @@ using UnityEngine.UI;
 
 public class ctrl : MonoBehaviour
 {
-    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, clear_UI;
+    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, clear_UI, audioSource01;
     public static GameObject[] ball = new GameObject[3];
     public float timer, time_escape, time_shot, timer_levelUp;
 
@@ -18,6 +18,7 @@ public class ctrl : MonoBehaviour
     
     //tmp
     int bird_value, bird_random;
+    GameObject audio01;
 
     Color red_a;
 
@@ -34,6 +35,12 @@ public class ctrl : MonoBehaviour
         GameObject.FindWithTag("score").GetComponent<Text>().text = "" + score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
 
         red_a = levelUp.GetComponent<Text>().color;
+
+        if (FindObjectsOfType<sound>().Length == 0)
+        {
+            audio01 = Instantiate(audioSource01);
+            DontDestroyOnLoad(audio01);
+        }
     }
 
     // Update is called once per frame
