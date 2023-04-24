@@ -30,9 +30,4 @@ public class ball : MonoBehaviour
             timer = Time.time;
         }
     }
-
-    void destryBall()
-    {
-        Destroy(this);
-    }
 }
