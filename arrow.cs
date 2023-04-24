@@ -6,8 +6,11 @@ using static UnityEngine.ParticleSystem;
 
 public class arrow : MonoBehaviour
 {
-    public GameObject feather_particle;
+    public GameObject feather_particle, scorePrefab;
     public ParticleSystem featherParticle_P;
+
+    //tmp
+    GameObject a;
     ParticleSystem.MainModule mainModule_F;
     // Start is called before the first frame update
     void Start()
@@ -69,10 +72,27 @@ public class arrow : MonoBehaviour
             Instantiate(feather_particle, new Vector2(this.transform.position.x, this.transform.position.y), Quaternion.identity);
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
-            if (collision.GetComponent<ball>().bird_value == 9) ctrl.score_UI += 4;
-            else if (collision.GetComponent<ball>().bird_value > 6) ctrl.score_UI += 3;
-            else if (collision.GetComponent<ball>().bird_value > 4) ctrl.score_UI += 2;
-            else ctrl.score_UI++;
+            a = Instantiate(scorePrefab, collision.transform.position, Quaternion.identity, GameObject.FindWithTag("Canvas").transform);
+            if (collision.GetComponent<ball>().bird_value == 9)
+            {
+                ctrl.score_UI += 4;
+                a.GetComponent<Text>().text = "+ 4";
+            }
+            else if (collision.GetComponent<ball>().bird_value > 6)
+            {
+                ctrl.score_UI += 3;
+                a.GetComponent<Text>().text = "+ 3";
+            }
+            else if (collision.GetComponent<ball>().bird_value > 4)
+            {
+                ctrl.score_UI += 2;
+                a.GetComponent<Text>().text = "+ 2";
+            }
+            else
+            {
+                ctrl.score_UI++;
+                a.GetComponent<Text>().text = "+ 1";
+            }
             if (ctrl.score_UI >= define.maxScore[ctrl.stageLevel - 1])
             {
                 if (ctrl.stageLevel == 5)

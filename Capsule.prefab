@@ -99,6 +99,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   feather_particle: {fileID: 1086040262253330328, guid: 40c360b9d56edf944b6e6ca0244b68e9, type: 3}
+  scorePrefab: {fileID: 7013121400076749958, guid: 7f12c037bf8a3cb489437b6f4382d73b, type: 3}
   featherParticle_P: {fileID: 1086040262253330329, guid: 40c360b9d56edf944b6e6ca0244b68e9, type: 3}
 --- !u!58 &6991637036176053786
 CircleCollider2D:
