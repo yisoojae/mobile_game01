@@ -111,6 +111,7 @@ public class arrow : MonoBehaviour
                             ctrl.ball[i] = null;
                         }
                     }
+                    ctrl.isLevelUpEffect = true;
                     ctrl.stageLevel++;
                     ctrl.score_UI = 0;
                     ctrl.arrowCount_UI = define.maxArrow[ctrl.stageLevel - 1];

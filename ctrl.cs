@@ -15,6 +15,7 @@ public class ctrl : MonoBehaviour
     SpriteRenderer bow_spriteRenderer;
 
     public static int arrowCount_UI, score_UI, stageLevel;
+    public static bool isLevelUpEffect;
     
     //tmp
     int bird_value, bird_random;
@@ -25,7 +26,7 @@ public class ctrl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        timer = 1; time_escape = 0; time_shot = 0; timer_levelUp = 0;
+        isLevelUpEffect = false; timer = 1; time_escape = 0; time_shot = 0; timer_levelUp = 0;
         bow_spriteRenderer = GameObject.FindWithTag("bow").GetComponent<SpriteRenderer>();
         bow_spriteRenderer.sprite = bow_sprites[0];
 
@@ -115,9 +116,9 @@ public class ctrl : MonoBehaviour
                 break;
             }
         }
-        
 
-        timer += Time.deltaTime;
+
+        if (!isLevelUpEffect) timer += Time.deltaTime;
 
         if (Input.touchCount > 0 && arrowCount_UI > 0)
         {
@@ -148,12 +149,22 @@ public class ctrl : MonoBehaviour
 
         if (red_a.a != 0)
         {
-            if (timer_levelUp > 0.1f)
+            if (timer_levelUp > 0.05f)
             {
-                if (red_a.a >= 0.1) red_a.a = levelUp.GetComponent<Text>().color.a - 0.1f;
+                if (red_a.a >= 0.025) red_a.a = levelUp.GetComponent<Text>().color.a - 0.025f;
                 else
                 {
                     red_a.a = 0;
+                    if (isLevelUpEffect)
+                    {
+                        isLevelUpEffect = false;
+                        levelUp.GetComponent<Text>().text = stageLevel + "단계";
+                        levelUp_ani();
+                    }
+                    else
+                    {
+                        levelUp.GetComponent<Text>().text = "성 공 !";
+                    }
                 }
                 levelUp.GetComponent<Text>().color = red_a;
                 timer_levelUp = 0;
