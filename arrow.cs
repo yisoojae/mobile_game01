@@ -12,6 +12,7 @@ public class arrow : MonoBehaviour
 
     //tmp
     GameObject a;
+    int b;
     ParticleSystem.MainModule mainModule_F;
     // Start is called before the first frame update
     void Start()
@@ -23,7 +24,11 @@ public class arrow : MonoBehaviour
     void FixedUpdate()
     {
         this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + define.bird_heightBound);
-        if (this.transform.position.y > 6) Destroy(this.gameObject);
+        if (this.transform.position.y > 6)
+        {
+            Destroy(this.gameObject);
+            ctrl.total_missedarrow++;
+        }
     }
 
     private void OnTriggerEnter2D(Collider2D collision)
@@ -74,6 +79,12 @@ public class arrow : MonoBehaviour
             Destroy(this.gameObject);
             Destroy(collision.gameObject);
             ctrl.ball[collision.GetComponent<ball>().bird_num] = null;
+            ctrl.total_score++;
+            b = 0;
+            for (int i = 0; i < 3; i++)
+            {
+                if (ctrl.ball[i] != null) b++;
+            }
             a = Instantiate(scorePrefab, collision.transform.position, Quaternion.identity, GameObject.FindWithTag("Canvas").transform);
             if (collision.GetComponent<ball>().bird_value == 9)
             {
@@ -118,6 +129,7 @@ public class arrow : MonoBehaviour
                     GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().arrowCountRefresh();
                     GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().timer = 0;
                     GameObject.FindWithTag("MainCamera").GetComponent<ctrl>().levelUp_ani();
+                    ctrl.total_spawn -= b;
                 }
             }
             GameObject.FindWithTag("score").GetComponent<Text>().text = "" + ctrl.score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];

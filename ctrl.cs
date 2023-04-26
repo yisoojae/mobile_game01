@@ -7,14 +7,14 @@ using UnityEngine.UI;
 
 public class ctrl : MonoBehaviour
 {
-    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, clear_UI, audioSource01;
+    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, audioSource01;
     public static GameObject[] ball = new GameObject[3];
     public float timer, time_escape, time_shot, timer_levelUp;
 
     public Sprite[] bow_sprites;
     SpriteRenderer bow_spriteRenderer;
 
-    public static int arrowCount_UI, score_UI, stageLevel;
+    public static int arrowCount_UI, score_UI, stageLevel, total_score, total_spawn, total_missedarrow, final_score, final_spawn, final_missedarrow;
     public static bool isLevelUpEffect;
     
     //tmp
@@ -30,8 +30,9 @@ public class ctrl : MonoBehaviour
         bow_spriteRenderer = GameObject.FindWithTag("bow").GetComponent<SpriteRenderer>();
         bow_spriteRenderer.sprite = bow_sprites[0];
 
-        arrowCount_UI = define.maxArrow[0]; score_UI = 0; stageLevel = 1;
-        
+        arrowCount_UI = define.maxArrow[0]; score_UI = 0; stageLevel = 1; total_score = 0; total_spawn = 0; total_missedarrow = 0;
+
+
         arrowCountRefresh();
         GameObject.FindWithTag("score").GetComponent<Text>().text = "" + score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
 
@@ -110,6 +111,7 @@ public class ctrl : MonoBehaviour
                 else if (bird_value == 7) ball[i] = Instantiate(ball07, new Vector2(3.5f, 2.2f), Quaternion.identity);
                 else if (bird_value == 8) ball[i] = Instantiate(ball08, new Vector2(3.5f, 2.2f), Quaternion.identity);
                 else if (bird_value == 9) ball[i] = Instantiate(ball09, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                total_spawn++;
                 timer = 0;
                 ball[i].GetComponent<ball>().bird_value = bird_value;
                 ball[i].GetComponent<ball>().bird_num = i;
@@ -193,8 +195,15 @@ public class ctrl : MonoBehaviour
     }
     public void gameClear()
     {
+        final_score = total_score;
+        final_missedarrow = total_missedarrow;
+        bird_value = 0;
+        for(int i = 0; i < 3; i++)
+        {
+            if (ball[i] != null) bird_value++;
+        }
+        final_spawn = total_spawn - bird_value;
         black_UI.SetActive(true);
         clearPanel_UI.SetActive(true);
-        clear_UI.SetActive(true);
     }
 }
