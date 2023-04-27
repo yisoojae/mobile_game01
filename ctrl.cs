@@ -7,15 +7,15 @@ using UnityEngine.UI;
 
 public class ctrl : MonoBehaviour
 {
-    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, audioSource01;
+    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, audioSource01, pause_button, resume_button;
     public static GameObject[] ball = new GameObject[3];
     public float timer, time_escape, time_shot, timer_levelUp;
 
     public Sprite[] bow_sprites;
     SpriteRenderer bow_spriteRenderer;
 
-    public static int arrowCount_UI, score_UI, stageLevel, total_score, total_spawn, total_missedarrow, final_score, final_spawn, final_missedarrow;
-    public static bool isLevelUpEffect;
+    public static int arrowCount_UI, score_UI, stageLevel, total_score, total_spawn, total_missedarrow, final_score, final_spawn, final_missedarrow, phone_height;
+    public static bool isLevelUpEffect, isPaused;
     
     //tmp
     int bird_value, bird_random;
@@ -26,7 +26,7 @@ public class ctrl : MonoBehaviour
     // Start is called before the first frame update
     void Start()
     {
-        isLevelUpEffect = false; timer = 1; time_escape = 0; time_shot = 0; timer_levelUp = 0;
+        isLevelUpEffect = false; isPaused = false; timer = 1; time_escape = 0; time_shot = 0; timer_levelUp = 0;
         bow_spriteRenderer = GameObject.FindWithTag("bow").GetComponent<SpriteRenderer>();
         bow_spriteRenderer.sprite = bow_sprites[0];
 
@@ -43,6 +43,8 @@ public class ctrl : MonoBehaviour
             audio01 = Instantiate(audioSource01);
             DontDestroyOnLoad(audio01);
         }
+
+        phone_height = Screen.height * 5 / 6;
     }
 
     // Update is called once per frame
@@ -65,113 +67,117 @@ public class ctrl : MonoBehaviour
             }
         }
 
-        if (timer > define.bird_setTime)
+        if (isPaused) time_shot += Time.deltaTime;
+        else
         {
-            for (int i = 0; i < ball.Length; i++)
+            if (timer > define.bird_setTime)
             {
-                if (ball[i] != null) continue;
-                if (stageLevel == 1) bird_value = 1;
-                else if (stageLevel == 2)
+                for (int i = 0; i < ball.Length; i++)
                 {
-                    bird_random = Random.Range(0, 4);
-                    bird_value = bird_random + 1;
-                }
-                else if (stageLevel == 3)
-                {
-                    bird_random = Random.Range(0, 8);
-                    if (bird_random > 5) bird_value = 6;
-                    else if (bird_random > 3) bird_value = 5;
-                    else bird_value = bird_random + 1;
-                }
-                else if (stageLevel == 4)
-                {
-                    bird_random = Random.Range(0, 12);
-                    if (bird_random > 9) bird_value = 8;
-                    else if (bird_random > 7) bird_value = 7;
-                    else if (bird_random > 5) bird_value = 6;
-                    else if (bird_random > 3) bird_value = 5;
-                    else bird_value = bird_random + 1;
-                }
-                else if (stageLevel == 5)
-                {
-                    bird_random = Random.Range(0, 14);
-                    if (bird_random > 11) bird_value = 9;
-                    else if (bird_random > 9) bird_value = 8;
-                    else if (bird_random > 7) bird_value = 7;
-                    else if (bird_random > 5) bird_value = 6;
-                    else if (bird_random > 3) bird_value = 5;
-                    else bird_value = bird_random + 1;
-                }
-                if (bird_value == 1) ball[i] = Instantiate(ball01, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 2) ball[i] = Instantiate(ball02, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 3) ball[i] = Instantiate(ball03, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 4) ball[i] = Instantiate(ball04, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 5) ball[i] = Instantiate(ball05, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 6) ball[i] = Instantiate(ball06, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 7) ball[i] = Instantiate(ball07, new Vector2(3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 8) ball[i] = Instantiate(ball08, new Vector2(3.5f, 2.2f), Quaternion.identity);
-                else if (bird_value == 9) ball[i] = Instantiate(ball09, new Vector2(-3.5f, 2.2f), Quaternion.identity);
-                total_spawn++;
-                timer = 0;
-                ball[i].GetComponent<ball>().bird_value = bird_value;
-                ball[i].GetComponent<ball>().bird_num = i;
-                break;
-            }
-        }
-
-
-        if (!isLevelUpEffect) timer += Time.deltaTime;
-
-        if (Input.touchCount > 0 && arrowCount_UI > 0)
-        {
-            if (Input.GetTouch(0).phase == TouchPhase.Began)
-            {
-                if (time_shot + define.arrow_cooldown < Time.time)
-                {
-                    time_shot = Time.time;
-                    bow_spriteRenderer.sprite = bow_sprites[0];
-                    Instantiate(arrow, new Vector2(1.1f, -3.2f), Quaternion.identity);
-                    arrowCount_UI--;
-                    arrowCountRefresh();
-                }
-            }
-        }
-        if (bow_spriteRenderer.sprite != bow_sprites[2])
-        {
-            if (time_shot + define.arrow_cooldown < Time.time) bow_spriteRenderer.sprite = bow_sprites[2];
-            else if (time_shot + define.arrow_cooldown / 2 < Time.time) bow_spriteRenderer.sprite = bow_sprites[1];
-        }
-
-        if (arrowCount_UI == 0 && time_shot + 2 < Time.time && !black_UI.activeSelf)
-        {
-            black_UI.SetActive(true);
-            panel_UI.SetActive(true);
-            reset_UI.SetActive(true);
-        }
-
-        if (red_a.a != 0)
-        {
-            if (timer_levelUp > 0.05f)
-            {
-                if (red_a.a >= 0.025) red_a.a = levelUp.GetComponent<Text>().color.a - 0.025f;
-                else
-                {
-                    red_a.a = 0;
-                    if (isLevelUpEffect)
+                    if (ball[i] != null) continue;
+                    if (stageLevel == 1) bird_value = 1;
+                    else if (stageLevel == 2)
                     {
-                        isLevelUpEffect = false;
-                        levelUp.GetComponent<Text>().text = stageLevel + "단계";
-                        levelUp_ani();
+                        bird_random = Random.Range(0, 4);
+                        bird_value = bird_random + 1;
                     }
+                    else if (stageLevel == 3)
+                    {
+                        bird_random = Random.Range(0, 8);
+                        if (bird_random > 5) bird_value = 6;
+                        else if (bird_random > 3) bird_value = 5;
+                        else bird_value = bird_random + 1;
+                    }
+                    else if (stageLevel == 4)
+                    {
+                        bird_random = Random.Range(0, 12);
+                        if (bird_random > 9) bird_value = 8;
+                        else if (bird_random > 7) bird_value = 7;
+                        else if (bird_random > 5) bird_value = 6;
+                        else if (bird_random > 3) bird_value = 5;
+                        else bird_value = bird_random + 1;
+                    }
+                    else if (stageLevel == 5)
+                    {
+                        bird_random = Random.Range(0, 14);
+                        if (bird_random > 11) bird_value = 9;
+                        else if (bird_random > 9) bird_value = 8;
+                        else if (bird_random > 7) bird_value = 7;
+                        else if (bird_random > 5) bird_value = 6;
+                        else if (bird_random > 3) bird_value = 5;
+                        else bird_value = bird_random + 1;
+                    }
+                    if (bird_value == 1) ball[i] = Instantiate(ball01, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 2) ball[i] = Instantiate(ball02, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 3) ball[i] = Instantiate(ball03, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 4) ball[i] = Instantiate(ball04, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 5) ball[i] = Instantiate(ball05, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 6) ball[i] = Instantiate(ball06, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 7) ball[i] = Instantiate(ball07, new Vector2(3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 8) ball[i] = Instantiate(ball08, new Vector2(3.5f, 2.2f), Quaternion.identity);
+                    else if (bird_value == 9) ball[i] = Instantiate(ball09, new Vector2(-3.5f, 2.2f), Quaternion.identity);
+                    total_spawn++;
+                    timer = 0;
+                    ball[i].GetComponent<ball>().bird_value = bird_value;
+                    ball[i].GetComponent<ball>().bird_num = i;
+                    break;
+                }
+            }
+
+
+            if (!isLevelUpEffect && !isPaused) timer += Time.deltaTime;
+
+            if (Input.touchCount > 0 && arrowCount_UI > 0)
+            {
+                if (Input.GetTouch(0).phase == TouchPhase.Began && Input.GetTouch(0).position.y < phone_height)
+                {
+                    if (time_shot + define.arrow_cooldown < Time.time)
+                    {
+                        time_shot = Time.time;
+                        bow_spriteRenderer.sprite = bow_sprites[0];
+                        Instantiate(arrow, new Vector2(1.1f, -3.2f), Quaternion.identity);
+                        arrowCount_UI--;
+                        arrowCountRefresh();
+                    }
+                }
+            }
+            if (bow_spriteRenderer.sprite != bow_sprites[2])
+            {
+                if (time_shot + define.arrow_cooldown < Time.time) bow_spriteRenderer.sprite = bow_sprites[2];
+                else if (time_shot + define.arrow_cooldown / 2 < Time.time) bow_spriteRenderer.sprite = bow_sprites[1];
+            }
+
+            if (arrowCount_UI == 0 && time_shot + 2 < Time.time && !black_UI.activeSelf)
+            {
+                black_UI.SetActive(true);
+                panel_UI.SetActive(true);
+                reset_UI.SetActive(true);
+            }
+
+            if (red_a.a != 0)
+            {
+                if (timer_levelUp > 0.05f)
+                {
+                    if (red_a.a >= 0.025) red_a.a = levelUp.GetComponent<Text>().color.a - 0.025f;
                     else
                     {
-                        levelUp.GetComponent<Text>().text = "성 공 !";
+                        red_a.a = 0;
+                        if (isLevelUpEffect)
+                        {
+                            isLevelUpEffect = false;
+                            levelUp.GetComponent<Text>().text = stageLevel + "단계";
+                            levelUp_ani();
+                        }
+                        else
+                        {
+                            levelUp.GetComponent<Text>().text = "성 공 !";
+                        }
                     }
+                    levelUp.GetComponent<Text>().color = red_a;
+                    timer_levelUp = 0;
                 }
-                levelUp.GetComponent<Text>().color = red_a;
-                timer_levelUp = 0;
+                timer_levelUp += Time.deltaTime;
             }
-            timer_levelUp += Time.deltaTime;
         }
     }
 
@@ -205,5 +211,16 @@ public class ctrl : MonoBehaviour
         final_spawn = total_spawn - bird_value;
         black_UI.SetActive(true);
         clearPanel_UI.SetActive(true);
+        pause_button.SetActive(false);
+    }
+    public void game_pause()
+    {
+        isPaused = true;
+        resume_button.SetActive(true);
+    }
+    public void game_resume()
+    {
+        isPaused = false;
+        resume_button.SetActive(false);
     }
 }

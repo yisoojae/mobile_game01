@@ -20,18 +20,22 @@ public class ball : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        if (height < 5) this.transform.position = new Vector2(this.transform.position.x + speed, this.transform.position.y + 0.05f);
-        else this.transform.position = new Vector2(this.transform.position.x + speed, this.transform.position.y - 0.05f);
-        if (this.transform.position.x > 5 || this.transform.position.x < -5)
+        if (ctrl.isPaused) timer += Time.deltaTime;
+        else
         {
-            Destroy(this.gameObject);
-            ctrl.ball[bird_num] = null;
-        }
-        if (timer + 0.1f < Time.time)
-        {
-            if (height == 9) height = 0;
-            else height++;
-            timer = Time.time;
+            if (height < 5) this.transform.position = new Vector2(this.transform.position.x + speed, this.transform.position.y + 0.05f);
+            else this.transform.position = new Vector2(this.transform.position.x + speed, this.transform.position.y - 0.05f);
+            if (this.transform.position.x > 5 || this.transform.position.x < -5)
+            {
+                Destroy(this.gameObject);
+                ctrl.ball[bird_num] = null;
+            }
+            if (timer + 0.1f < Time.time)
+            {
+                if (height == 9) height = 0;
+                else height++;
+                timer = Time.time;
+            }
         }
     }
 }

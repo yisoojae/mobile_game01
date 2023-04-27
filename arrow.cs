@@ -23,11 +23,14 @@ public class arrow : MonoBehaviour
     // Update is called once per frame
     void FixedUpdate()
     {
-        this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + define.bird_heightBound);
-        if (this.transform.position.y > 6)
+        if (!ctrl.isPaused)
         {
-            Destroy(this.gameObject);
-            ctrl.total_missedarrow++;
+            this.transform.position = new Vector2(this.transform.position.x, this.transform.position.y + define.bird_heightBound);
+            if (this.transform.position.y > 6)
+            {
+                Destroy(this.gameObject);
+                ctrl.total_missedarrow++;
+            }
         }
     }
 
