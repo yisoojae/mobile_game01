@@ -7,9 +7,9 @@ using UnityEngine.UI;
 
 public class ctrl : MonoBehaviour
 {
-    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, audioSource01, pause_button, resume_button;
+    public GameObject ball01, ball02, ball03, ball04, ball05, ball06, ball07, ball08, ball09, arrow, arrowCount, black_UI, panel_UI, reset_UI, levelUp, clearPanel_UI, audioSource01, pause_button, resume_button, blackBar;
     public static GameObject[] ball = new GameObject[3];
-    public float timer, time_escape, time_shot, timer_levelUp;
+    public float timer, time_escape, time_shot, timer_levelUp, timer_blackBar;
 
     public Sprite[] bow_sprites;
     SpriteRenderer bow_spriteRenderer;
@@ -21,12 +21,12 @@ public class ctrl : MonoBehaviour
     int bird_value, bird_random;
     GameObject audio01;
 
-    Color red_a;
+    Color red_a, black_a;
 
     // Start is called before the first frame update
     void Start()
     {
-        isLevelUpEffect = false; isPaused = false; timer = 1; time_escape = 0; time_shot = 0; timer_levelUp = 0;
+        isLevelUpEffect = false; isPaused = false; timer = 1; time_escape = 0; time_shot = 0; timer_levelUp = 0; timer_blackBar = 0;
         bow_spriteRenderer = GameObject.FindWithTag("bow").GetComponent<SpriteRenderer>();
         bow_spriteRenderer.sprite = bow_sprites[0];
 
@@ -37,6 +37,7 @@ public class ctrl : MonoBehaviour
         GameObject.FindWithTag("score").GetComponent<Text>().text = "" + score_UI + " / " + define.maxScore[ctrl.stageLevel - 1];
 
         red_a = levelUp.GetComponent<Text>().color;
+        black_a = blackBar.GetComponent<Image>().color;
 
         if (FindObjectsOfType<sound>().Length == 0)
         {
@@ -158,7 +159,7 @@ public class ctrl : MonoBehaviour
             {
                 if (timer_levelUp > 0.05f)
                 {
-                    if (red_a.a >= 0.025) red_a.a = levelUp.GetComponent<Text>().color.a - 0.025f;
+                    if (red_a.a > 0.025) red_a.a -= 0.025f;
                     else
                     {
                         red_a.a = 0;
@@ -178,6 +179,18 @@ public class ctrl : MonoBehaviour
                 }
                 timer_levelUp += Time.deltaTime;
             }
+        }
+        if (black_a.a != 0)
+        {
+            if (timer_blackBar > 0.05f)
+            {
+                if (black_a.a > 0.025) black_a.a -= 0.025f;
+                else black_a.a = 0;
+                blackBar.GetComponent<Image>().color = black_a;
+                blackBar.GetComponentInChildren<Text>().color = black_a;
+                timer_blackBar = 0;
+            }
+            timer_blackBar += Time.deltaTime;
         }
     }
 
@@ -222,5 +235,15 @@ public class ctrl : MonoBehaviour
     {
         isPaused = false;
         resume_button.SetActive(false);
+    }
+    public void game_back()
+    {
+        if (blackBar.GetComponent<Image>().color.a == 0f)
+        {
+            black_a.a = 0.6f;
+            blackBar.GetComponent<Image>().color = black_a;
+            blackBar.GetComponentInChildren<Text>().color = black_a;
+        }
+        else Application.Quit();
     }
 }
